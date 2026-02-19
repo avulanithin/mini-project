@@ -1,0 +1,89 @@
+# ===============================
+# Python
+# ===============================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv/
+
+# ===============================
+# Flask
+# ===============================
+instance/
+.webassets-cache
+
+# ===============================
+# SQLite Database
+# ===============================
+*.sqlite3
+*.db
+*.db-journal
+
+# If your DB has a specific name:
+bloodcamp.db
+database.db
+
+# ===============================
+# Environment Variables
+# ===============================
+.env
+.env.*
+*.env
+
+# ===============================
+# Logs
+# ===============================
+*.log
+logs/
+log/
+
+# ===============================
+# Build / Distribution
+# ===============================
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ===============================
+# Jupyter Notebooks
+# ===============================
+.ipynb_checkpoints/
+
+# ===============================
+# VS Code
+# ===============================
+.vscode/
+
+# ===============================
+# PyCharm
+# ===============================
+.idea/
+
+# ===============================
+# OS Files
+# ===============================
+.DS_Store
+Thumbs.db
+
+# ===============================
+# Coverage Reports
+# ===============================
+htmlcov/
+.coverage
+.coverage.*
+.pytest_cache/
+
+# ===============================
+# Static Compiled Assets (Optional)
+# ===============================
+*.min.css
+*.min.js
