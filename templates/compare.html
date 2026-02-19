@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Compare Simulations — Blood Donation Camp Simulation{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="page-header">
+        <h1 class="page-title">Compare Simulations</h1>
+        <p class="page-subtitle">Select multiple simulation runs to compare performance metrics side by side</p>
+    </div>
+
+    <div id="loading" class="loading">Loading simulations...</div>
+    <div id="error" class="error-message" style="display: none;"></div>
+
+    <div id="compareContent" style="display: none;">
+
+        <!-- Selection -->
+        <section class="selection-section">
+            <h2>Select Simulations to Compare</h2>
+            <div id="simulationCheckboxes" class="checkbox-grid"></div>
+            <button id="compareButton" class="btn btn-primary">Compare Selected →</button>
+        </section>
+
+        <!-- Comparison Results -->
+        <div id="comparisonResults" style="display: none;">
+
+            <section class="comparison-section">
+                <h2>Comparison Overview</h2>
+                <div class="table-container">
+                    <table id="comparisonTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th class="sim-col">Simulation 1</th>
+                                <th class="sim-col">Simulation 2</th>
+                                <th class="sim-col">Simulation 3</th>
+                                <th class="sim-col">Simulation 4</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparisonTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="charts-section">
+                <div class="section-heading">Visual Comparison</div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Average Waiting Time Comparison</div>
+                            <div class="chart-subtitle">Per-stage average wait across simulations</div>
+                        </div>
+                    </div>
+                    <canvas id="waitTimeComparisonChart"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Server Utilization Comparison</div>
+                            <div class="chart-subtitle">Average utilization percentage across simulations</div>
+                        </div>
+                    </div>
+                    <canvas id="utilizationComparisonChart"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Donors Served vs Unserved</div>
+                            <div class="chart-subtitle">Throughput comparison across simulations</div>
+                        </div>
+                    </div>
+                    <canvas id="donorsComparisonChart"></canvas>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='js/compare.js') }}"></script>
+{% endblock %}

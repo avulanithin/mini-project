@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}Setup Camp — Blood Donation Camp Simulation{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="page-header">
+        <h1 class="page-title">Configure Blood Donation Camp</h1>
+        <p class="page-subtitle">Define camp parameters to run a discrete-event simulation</p>
+    </div>
+
+    <div id="notification" class="notification" style="display: none;"></div>
+
+    <div class="form-container">
+        <form id="campSetupForm">
+
+            <!-- Camp Details -->
+            <section class="form-section">
+                <div class="form-section-header">
+                    <div class="form-section-header-icon">🏥</div>
+                    <h2>Camp Details</h2>
+                </div>
+
+                <div class="form-group">
+                    <label for="campName">Camp Name *</label>
+                    <input type="text" id="campName" name="campName" required
+                           placeholder="e.g., City Hospital Blood Drive 2026">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="startTime">Start Time *</label>
+                        <input type="time" id="startTime" name="startTime" required value="09:00">
+                    </div>
+                    <div class="form-group">
+                        <label for="endTime">End Time *</label>
+                        <input type="time" id="endTime" name="endTime" required value="17:00">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="durationMinutes">Camp Duration (minutes) *</label>
+                        <input type="number" id="durationMinutes" name="durationMinutes" required
+                               min="60" max="720" value="480" readonly>
+                        <small>Calculated automatically from start and end times</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="maxDonors">Maximum Donors <span style="color:var(--text-muted);font-weight:400">(optional)</span></label>
+                        <input type="number" id="maxDonors" name="maxDonors"
+                               min="1" placeholder="Leave empty for unlimited">
+                        <small>Cap total donors to simulate</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="peakHours">Expected Peak Hours <span style="color:var(--text-muted);font-weight:400">(optional)</span></label>
+                    <input type="text" id="peakHours" name="peakHours"
+                           placeholder="e.g., 10:00–12:00, 14:00–16:00">
+                    <small>Informational only — not used in current simulation</small>
+                </div>
+            </section>
+
+            <!-- Staff & Resources -->
+            <section class="form-section">
+                <div class="form-section-header">
+                    <div class="form-section-header-icon">👥</div>
+                    <h2>Staff &amp; Resources</h2>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="numServers">Donation Counters *</label>
+                        <input type="number" id="numServers" name="numServers" required
+                               min="1" max="10" value="3">
+                        <small>Parallel service stations for blood donation</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="numScreeningStaff">Screening Staff *</label>
+                        <input type="number" id="numScreeningStaff" name="numScreeningStaff" required
+                               min="1" max="10" value="2">
+                        <small>Medical staff for donor screening</small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="avgScreeningTime">Avg Screening Time (min) *</label>
+                        <input type="number" id="avgScreeningTime" name="avgScreeningTime" required
+                               min="1" max="30" value="10" step="0.5">
+                        <small>Time for medical screening per donor</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="avgDonationTime">Avg Donation Time (min) *</label>
+                        <input type="number" id="avgDonationTime" name="avgDonationTime" required
+                               min="5" max="60" value="15" step="0.5">
+                        <small>Time for blood donation per donor</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Queue & Simulation Parameters -->
+            <section class="form-section">
+                <div class="form-section-header">
+                    <div class="form-section-header-icon">⚙️</div>
+                    <h2>Queue &amp; Simulation Parameters</h2>
+                </div>
+
+                <div class="form-group">
+                    <label for="arrivalRate">Donor Arrival Rate — λ (donors per hour) *</label>
+                    <input type="number" id="arrivalRate" name="arrivalRate" required
+                           min="1" max="50" value="5" step="0.5">
+                    <small>Average number of donors arriving per hour</small>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="arrivalDistribution">Arrival Distribution *</label>
+                        <select id="arrivalDistribution" name="arrivalDistribution" required>
+                            <option value="Poisson" selected>Poisson</option>
+                        </select>
+                        <small>Statistical distribution for donor arrivals</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceDistribution">Service Time Distribution *</label>
+                        <select id="serviceDistribution" name="serviceDistribution" required>
+                            <option value="Exponential" selected>Exponential</option>
+                            <option value="Uniform">Uniform</option>
+                        </select>
+                        <small>Distribution for service times</small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="queueDiscipline">Queue Discipline *</label>
+                        <select id="queueDiscipline" name="queueDiscipline" required>
+                            <option value="FCFS" selected>First-Come-First-Serve (FCFS)</option>
+                        </select>
+                        <small>Order of service for donors</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="allowIdleServers">Allow Idle Servers *</label>
+                        <select id="allowIdleServers" name="allowIdleServers" required>
+                            <option value="1" selected>Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                        <small>Whether servers can remain idle when no queue</small>
+                    </div>
+                </div>
+            </section>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-large">
+                    ▶ Run Simulation
+                </button>
+                <button type="reset" class="btn btn-secondary btn-large">
+                    Reset
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/setup.js') }}"></script>
+{% endblock %}

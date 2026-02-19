@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Home — Blood Donation Camp Simulation{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-tag">🩸 Discrete-Event Simulation Platform</div>
+        <h1>Blood Donation Camp Queue Simulation &amp; Planning System</h1>
+        <p class="subtitle">Optimize your camp operations before the day arrives — simulate donor flow, queue congestion, and staff utilization with precision.</p>
+    </section>
+
+    <!-- Info Cards -->
+    <section class="info-grid">
+        <div class="info-card">
+            <div class="info-card-icon">🎯</div>
+            <h2>Purpose</h2>
+            <p>Help camp organizers plan and optimize blood donation camps by simulating donor arrivals, queue behavior, and staff utilization before the actual event.</p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-icon">📊</div>
+            <h2>Key Features</h2>
+            <ul>
+                <li>Multi-stage simulation — Registration → Screening → Donation</li>
+                <li>Poisson arrival process modeling</li>
+                <li>Multiple parallel service counters</li>
+                <li>Real-time queue statistics</li>
+                <li>Server utilization analysis</li>
+                <li>Scenario comparison tools</li>
+            </ul>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-icon">🔬</div>
+            <h2>Simulation Model</h2>
+            <p><strong>Arrival Distribution:</strong> Poisson process</p>
+            <p><strong>Service Time:</strong> Exponential / Uniform</p>
+            <p><strong>Queue Discipline:</strong> First-Come-First-Serve (FCFS)</p>
+            <p><strong>System Type:</strong> Multi-server, multi-stage queuing</p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-card-icon">🎓</div>
+            <h2>Problem Statement</h2>
+            <p>Blood donation camps face resource allocation and queue management challenges. This simulation answers:</p>
+            <ul>
+                <li>How many service counters are needed?</li>
+                <li>What are expected wait times?</li>
+                <li>How to minimize donor waiting time?</li>
+                <li>What is optimal staff allocation?</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Ready to plan your camp?</h2>
+        <p>Configure your camp parameters and run simulations to optimize operations before the event.</p>
+        <a href="/setup" class="btn btn-primary btn-large">Setup New Camp →</a>
+    </section>
+
+    <!-- Methodology -->
+    <section class="methodology">
+        <div class="section-label">How it works</div>
+        <h2 class="section-title">Four-step simulation process</h2>
+        <div class="process-flow">
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <h3>Configure Camp</h3>
+                <p>Set duration, staffing levels, and queue parameters</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <h3>Run Simulation</h3>
+                <p>Execute discrete-event simulation engine</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <h3>Analyze Results</h3>
+                <p>Review KPIs, charts and donor timelines</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <h3>Optimize</h3>
+                <p>Compare scenarios and improve staffing decisions</p>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

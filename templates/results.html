@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Simulation Results — Blood Donation Camp Simulation{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <!-- Results Header -->
+    <div class="results-header">
+        <div>
+            <h1 class="page-title">Simulation Results</h1>
+            <p class="page-subtitle">Detailed performance metrics and donor timeline data</p>
+        </div>
+        <div class="results-actions">
+            <button onclick="window.print()" class="btn btn-secondary">Print Report</button>
+            <a href="/setup" class="btn btn-primary">+ New Simulation</a>
+        </div>
+    </div>
+
+    <div id="loading" class="loading">Loading simulation results...</div>
+    <div id="error" class="error-message" style="display: none;"></div>
+
+    <div id="resultsContent" style="display: none;">
+
+        <!-- Camp Information + Simulation Parameters side by side -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;margin-bottom:20px;">
+            <section class="info-panel">
+                <div class="info-panel-title">Camp Information</div>
+                <div id="campInfo" class="info-grid-small"></div>
+            </section>
+            <section class="info-panel">
+                <div class="info-panel-title">Simulation Parameters</div>
+                <div id="simParams" class="info-grid-small"></div>
+            </section>
+        </div>
+
+        <!-- KPIs -->
+        <section class="kpi-section">
+            <div class="kpi-section-title">Key Performance Indicators</div>
+            <div class="kpi-grid" id="kpiGrid"></div>
+        </section>
+
+        <!-- Charts -->
+        <section class="charts-section">
+            <div class="section-heading">Performance Visualizations</div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Queue Length Over Time</div>
+                        <div class="chart-subtitle">Total donors waiting across all stages per minute</div>
+                    </div>
+                </div>
+                <canvas id="queueLengthChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Waiting Time by Donor</div>
+                        <div class="chart-subtitle">Individual total waiting time per donor index</div>
+                    </div>
+                </div>
+                <canvas id="waitingTimeChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Server Utilization</div>
+                        <div class="chart-subtitle">Percentage of time each service counter was busy</div>
+                    </div>
+                </div>
+                <canvas id="utilizationChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Donor Table -->
+        <section class="table-section">
+            <div class="section-heading">Donor Timeline Details</div>
+            <div class="table-controls">
+                <input type="text" id="searchDonors" placeholder="Search donors…" class="search-input">
+                <select id="filterServed" class="filter-select">
+                    <option value="all">All Donors</option>
+                    <option value="served">Served Only</option>
+                    <option value="unserved">Unserved Only</option>
+                </select>
+            </div>
+            <div class="table-container">
+                <table id="donorsTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Donor #</th>
+                            <th>Arrival</th>
+                            <th>Reg Start</th>
+                            <th>Reg End</th>
+                            <th>Screen Start</th>
+                            <th>Screen End</th>
+                            <th>Donation Start</th>
+                            <th>Donation End</th>
+                            <th>Total Wait</th>
+                            <th>Total Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="donorsTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Service Stations Table -->
+        <section class="table-section">
+            <div class="section-heading">Service Station Performance</div>
+            <div class="table-container">
+                <table id="stationsTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Station Type</th>
+                            <th>Station #</th>
+                            <th>Utilization %</th>
+                            <th>Total Service Time</th>
+                            <th>Donors Served</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stationsTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+    const SIMULATION_ID = {{ simulation_id }};
+</script>
+<script src="{{ url_for('static', filename='js/results.js') }}"></script>
+{% endblock %}
